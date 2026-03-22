@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { aboutConfig, type SocialKey } from '../../config/about';
+import { iconConfig } from '../../config/icons';
+import { siteConfig } from '../../config/site';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'ja' } }, { params: { lang: 'en' } }];
+}
+
+const lang = Astro.params.lang as 'ja' | 'en';
+const isJa = lang === 'ja';
+const otherLang = lang === 'ja' ? 'en' : 'ja';
+const profile = aboutConfig[lang];
+const socialOrder: SocialKey[] = ['github', 'x', 'zenn', 'qiita', 'devto'];
+const socialLabel: Record<SocialKey, string> = {
+  github: 'GitHub',
+  x: 'X',
+  zenn: 'Zenn',
+  qiita: 'Qiita',
+  devto: 'dev.to'
+};
+const socialLinks = socialOrder
+  .filter((key) => profile.socials[key].enabled)
+  .map((key) => ({
+    key,
+    label: socialLabel[key],
+    href: profile.socials[key].url
+  }));
+---
+
+<BaseLayout title={isJa ? 'プロフィール' : 'Profile'} lang={lang} languageSwitchHref={`/${otherLang}/`}>
+  <article class="profile">
+    <img class="profile-image" src={siteConfig.profileImageSrc} alt={isJa ? 'プロフィール画像' : 'Profile image'} />
+
+    <h1>{profile.name}</h1>
+    <p class="role">{profile.role}</p>
+    {profile.bio.map((line) => (
+      <p>{line}</p>
+    ))}
+
+    <p class="socials" aria-label="Social links">
+      {socialLinks.map((link) => (
+        <a
+          class={`social-link social-${link.key}`}
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={link.label}
+          title={link.label}
+        >
+          {link.key === 'github' && (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.11.79-.25.79-.56v-2.17c-3.2.69-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.71.08-.71 1.16.08 1.76 1.2 1.76 1.2 1.03 1.77 2.7 1.26 3.35.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.47.12-3.06 0 0 .98-.31 3.2 1.19A11.1 11.1 0 0 1 12 6.1c.98 0 1.97.13 2.9.38 2.21-1.5 3.2-1.2 3.2-1.2.63 1.6.23 2.78.11 3.07.75.8 1.2 1.84 1.2 3.1 0 4.43-2.7 5.4-5.27 5.68.42.36.79 1.06.79 2.14v3.16c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
+            </svg>
+          )}
+          {link.key === 'x' && (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M18.9 2h3.68l-8.03 9.18L24 22h-7.41l-5.8-6.76L4.86 22H1.17l8.59-9.82L.7 2h7.6l5.24 6.2L18.9 2Zm-1.3 17.77h2.04L7.2 4.11H5.01L17.6 19.77Z"/>
+            </svg>
+          )}
+          {link.key === 'zenn' && (
+            <img src={iconConfig.zennLogoSrc} alt="" aria-hidden="true" class="zenn-mark" />
+          )}
+          {link.key === 'qiita' && <span class="qiita-mark">Q</span>}
+          {link.key === 'devto' && <span class="devto-mark">DEV</span>}
+        </a>
+      ))}
+    </p>
+
+    <h2>{profile.contactTitle}</h2>
+    <p class="contact-item">
+      <span class="contact-icon" aria-hidden="true">✉</span>
+      <span>: <a href={`mailto:${profile.contactEmail}`}>{profile.contactEmail}</a></span>
+    </p>
+    <p class="contact-item">
+      <span class="contact-icon" aria-hidden="true">𝕏</span>
+      <span>: <a href={profile.contactXUrl} target="_blank" rel="noopener noreferrer">{profile.contactX}</a></span>
+    </p>
+  </article>
+
+  <style>
+    .profile { padding-top: 0.25rem; }
+    .profile-image {
+      width: 96px;
+      height: 96px;
+      border-radius: 999px;
+      border: 1px solid var(--profile-border);
+      object-fit: cover;
+      margin-bottom: 0.6rem;
+    }
+    .role { color: var(--muted); margin-top: -0.45rem; }
+    .socials {
+      display: flex;
+      gap: 0.6rem;
+      margin: 0.9rem 0 1.4rem;
+    }
+    .social-link {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--icon-border);
+      border-radius: 999px;
+      display: inline-grid;
+      place-items: center;
+      color: var(--text);
+      background: var(--card-bg);
+    }
+    .social-github { border-color: #9aa8b5; background: #eef2f6; }
+    .social-x { border-color: #8f9aa4; background: #edf0f3; }
+    .social-zenn { border-color: var(--source-zenn-border); background: var(--source-zenn-bg); }
+    .social-qiita { border-color: var(--source-qiita-border); background: var(--source-qiita-bg); }
+    .social-devto { border-color: var(--source-devto-border); background: var(--source-devto-bg); }
+    .social-link svg { width: 18px; height: 18px; }
+    .zenn-mark { width: 14px; height: 14px; display: block; }
+    .qiita-mark {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--qiita-mark);
+    }
+    .devto-mark {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+    .contact-item {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin: 0.35rem 0;
+    }
+    .contact-icon {
+      width: 1.2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    h2 { margin-top: 1.8rem; }
+    h3 { margin-top: 1.2rem; }
+  </style>
+</BaseLayout>

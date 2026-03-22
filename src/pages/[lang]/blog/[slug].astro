@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getTagPalette } from '../../../config/tags';
+
+const routeKeyFrom = (id: string, fallbackSlug: string) => {
+  const match = id.match(/(.*)\/(ja|en)\.(md|mdx)$/);
+  return match ? match[1] : fallbackSlug;
+};
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: {
+      lang: post.data.lang,
+      slug: (() => {
+        const match = post.id.match(/(.*)\/(ja|en)\.(md|mdx)$/);
+        return match ? match[1] : post.slug;
+      })()
+    },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const currentRouteKey = routeKeyFrom(post.id, post.slug);
+const otherLang = post.data.lang === 'ja' ? 'en' : 'ja';
+const siblings = await getCollection(
+  'blog',
+  (entry) => routeKeyFrom(entry.id, entry.slug) === currentRouteKey && entry.data.lang === otherLang
+);
+const translatedPost = siblings[0];
+const { Content } = await post.render();
+---
+
+<BaseLayout
+  title={post.data.title}
+  lang={post.data.lang}
+  languageSwitchHref={
+    translatedPost
+      ? `/${translatedPost.data.lang}/blog/${routeKeyFrom(translatedPost.id, translatedPost.slug)}/`
+      : undefined
+  }
+>
+  <article>
+    <p class="muted">{post.data.pubDate.toISOString().slice(0, 10)}</p>
+    <h1>{post.data.title}</h1>
+    <p>{post.data.description}</p>
+    {post.data.tags.length > 0 && (
+      <div class="post-tags" aria-label="Tags">
+        {post.data.tags.map((tag) => (
+          <span
+            class="post-tag"
+            style={`--tag-chip-bg:${getTagPalette(tag).bg};--tag-chip-border:${getTagPalette(tag).border};--tag-chip-text:${getTagPalette(tag).text};`}
+          >
+            #{tag}
+          </span>
+        ))}
+      </div>
+    )}
+    <Content />
+  </article>
+  <style>
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0.4rem 0 1rem;
+    }
+    .post-tag {
+      display: inline-block;
+      padding: 0.16rem 0.56rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      border: 1px solid var(--tag-chip-border, var(--tag-border));
+      background: var(--tag-chip-bg, var(--tag-bg));
+      color: var(--tag-chip-text, var(--tag-text));
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+    }
+  </style>
+</BaseLayout>

@@ -1,0 +1,193 @@
+export type ThemeKey = 'paper' | 'ocean' | 'forest' | 'sunset';
+
+type ThemeTokens = {
+  bg: string;
+  text: string;
+  muted: string;
+  line: string;
+  cardBg: string;
+  cardBorder: string;
+  cardHoverBorder: string;
+  cardShadow: string;
+  badgeBg: string;
+  badgeBorder: string;
+  badgeText: string;
+  sourceBlogBg: string;
+  sourceQiitaBg: string;
+  sourceQiitaBorder: string;
+  sourceQiitaText: string;
+  sourceZennBg: string;
+  sourceZennBorder: string;
+  sourceZennText: string;
+  sourceNoteBg: string;
+  sourceNoteBorder: string;
+  sourceNoteText: string;
+  sourceDevtoBg: string;
+  sourceDevtoBorder: string;
+  sourceDevtoText: string;
+  translationBg: string;
+  translationBorder: string;
+  translationText: string;
+  tagBg: string;
+  tagBorder: string;
+  tagText: string;
+  arrowColor: string;
+  arrowHoverColor: string;
+  profileBorder: string;
+  iconBorder: string;
+  qiitaMark: string;
+};
+
+export const activeTheme: ThemeKey = 'paper';
+
+export const themes: Record<ThemeKey, ThemeTokens> = {
+  paper: {
+    bg: '#fafaf8',
+    text: '#1a1a1a',
+    muted: '#666666',
+    line: '#dddddd',
+    cardBg: '#ffffff',
+    cardBorder: '#dddddd',
+    cardHoverBorder: '#cfcfcf',
+    cardShadow: '0 10px 24px rgba(0, 0, 0, 0.08)',
+    badgeBg: '#f2f2f2',
+    badgeBorder: '#cfcfcf',
+    badgeText: '#333333',
+    sourceBlogBg: '#ececec',
+    sourceQiitaBg: '#d9f5df',
+    sourceQiitaBorder: '#86d49a',
+    sourceQiitaText: '#0f6d2f',
+    sourceZennBg: '#dff0ff',
+    sourceZennBorder: '#8ec8ff',
+    sourceZennText: '#005ea6',
+    sourceNoteBg: '#e9e9e9',
+    sourceNoteBorder: '#bdbdbd',
+    sourceNoteText: '#222222',
+    sourceDevtoBg: '#e8e4ff',
+    sourceDevtoBorder: '#b6a8ff',
+    sourceDevtoText: '#442a9f',
+    translationBg: '#fff8df',
+    translationBorder: '#e7d38f',
+    translationText: '#756100',
+    tagBg: '#f7f7f7',
+    tagBorder: '#d9d9d9',
+    tagText: '#444444',
+    arrowColor: '#7a7a7a',
+    arrowHoverColor: '#444444',
+    profileBorder: '#d7d7d7',
+    iconBorder: '#d0d0d0',
+    qiitaMark: '#3f873f'
+  },
+  ocean: {
+    bg: '#f3f8fb',
+    text: '#11222f',
+    muted: '#4f6676',
+    line: '#c8d8e4',
+    cardBg: '#ffffff',
+    cardBorder: '#c8d8e4',
+    cardHoverBorder: '#9ebfd4',
+    cardShadow: '0 10px 22px rgba(17, 53, 76, 0.16)',
+    badgeBg: '#eaf3f9',
+    badgeBorder: '#b8d0e0',
+    badgeText: '#234259',
+    sourceBlogBg: '#dfecf5',
+    sourceQiitaBg: '#d7f0df',
+    sourceQiitaBorder: '#84c89b',
+    sourceQiitaText: '#175e35',
+    sourceZennBg: '#d8ecff',
+    sourceZennBorder: '#7eb8f1',
+    sourceZennText: '#0d4c8d',
+    sourceNoteBg: '#e1e9ee',
+    sourceNoteBorder: '#b6c8d4',
+    sourceNoteText: '#2b3f4d',
+    sourceDevtoBg: '#e3e2ff',
+    sourceDevtoBorder: '#a7a2ff',
+    sourceDevtoText: '#3a2f9a',
+    translationBg: '#fff3d8',
+    translationBorder: '#dfc786',
+    translationText: '#6c5718',
+    tagBg: '#edf5fa',
+    tagBorder: '#c0d7e4',
+    tagText: '#355468',
+    arrowColor: '#56738a',
+    arrowHoverColor: '#27465c',
+    profileBorder: '#c8d8e4',
+    iconBorder: '#c0d2df',
+    qiitaMark: '#2e7a47'
+  },
+  forest: {
+    bg: '#f5f8f3',
+    text: '#1b2a20',
+    muted: '#5a6d60',
+    line: '#d3ddd1',
+    cardBg: '#ffffff',
+    cardBorder: '#d3ddd1',
+    cardHoverBorder: '#b6c7b3',
+    cardShadow: '0 10px 22px rgba(33, 62, 38, 0.14)',
+    badgeBg: '#edf2ea',
+    badgeBorder: '#c9d4c6',
+    badgeText: '#324839',
+    sourceBlogBg: '#e4ebe1',
+    sourceQiitaBg: '#d8f0dc',
+    sourceQiitaBorder: '#8ec596',
+    sourceQiitaText: '#1f6232',
+    sourceZennBg: '#dcecf8',
+    sourceZennBorder: '#95bdd9',
+    sourceZennText: '#1b5a85',
+    sourceNoteBg: '#e5e8e3',
+    sourceNoteBorder: '#c4cbc0',
+    sourceNoteText: '#2e3b30',
+    sourceDevtoBg: '#e7e2f6',
+    sourceDevtoBorder: '#b7a9d9',
+    sourceDevtoText: '#4a3d72',
+    translationBg: '#f9f2d9',
+    translationBorder: '#dbc98c',
+    translationText: '#6f5f24',
+    tagBg: '#eef3eb',
+    tagBorder: '#cfd9ca',
+    tagText: '#3f5445',
+    arrowColor: '#687b6b',
+    arrowHoverColor: '#3f5644',
+    profileBorder: '#d3ddd1',
+    iconBorder: '#cfd8cc',
+    qiitaMark: '#3a7d43'
+  },
+  sunset: {
+    bg: '#fff8f3',
+    text: '#2e1f1b',
+    muted: '#7d6158',
+    line: '#e7d1c6',
+    cardBg: '#ffffff',
+    cardBorder: '#e7d1c6',
+    cardHoverBorder: '#dbbcae',
+    cardShadow: '0 10px 22px rgba(99, 56, 40, 0.14)',
+    badgeBg: '#f8ece5',
+    badgeBorder: '#dfc1b2',
+    badgeText: '#6b4437',
+    sourceBlogBg: '#f3e3db',
+    sourceQiitaBg: '#e1f2dc',
+    sourceQiitaBorder: '#9ac695',
+    sourceQiitaText: '#295f30',
+    sourceZennBg: '#e2efff',
+    sourceZennBorder: '#9ec1e8',
+    sourceZennText: '#1d568c',
+    sourceNoteBg: '#eee0d8',
+    sourceNoteBorder: '#cfb5a8',
+    sourceNoteText: '#5d3f34',
+    sourceDevtoBg: '#ebe1ff',
+    sourceDevtoBorder: '#bca8ea',
+    sourceDevtoText: '#51368f',
+    translationBg: '#fff1d9',
+    translationBorder: '#e5c895',
+    translationText: '#755522',
+    tagBg: '#f9eee8',
+    tagBorder: '#e3cac0',
+    tagText: '#6c4a3f',
+    arrowColor: '#8b6a5d',
+    arrowHoverColor: '#5f4036',
+    profileBorder: '#e7d1c6',
+    iconBorder: '#e0c8bb',
+    qiitaMark: '#3f7f3f'
+  }
+};
+

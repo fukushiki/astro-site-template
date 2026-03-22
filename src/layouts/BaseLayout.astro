@@ -1,0 +1,130 @@
+---
+import { siteConfig } from '../config/site';
+import { activeTheme, themes } from '../config/theme';
+
+export interface Props {
+  title: string;
+  lang: 'ja' | 'en';
+  languageSwitchHref?: string;
+}
+
+const { title, lang, languageSwitchHref } = Astro.props;
+const theme = themes[activeTheme];
+const themeStyle = [
+  `--bg:${theme.bg}`,
+  `--text:${theme.text}`,
+  `--muted:${theme.muted}`,
+  `--line:${theme.line}`,
+  '--max:720px',
+  `--card-bg:${theme.cardBg}`,
+  `--card-border:${theme.cardBorder}`,
+  `--card-hover-border:${theme.cardHoverBorder}`,
+  `--card-shadow:${theme.cardShadow}`,
+  `--badge-bg:${theme.badgeBg}`,
+  `--badge-border:${theme.badgeBorder}`,
+  `--badge-text:${theme.badgeText}`,
+  `--source-blog-bg:${theme.sourceBlogBg}`,
+  `--source-qiita-bg:${theme.sourceQiitaBg}`,
+  `--source-qiita-border:${theme.sourceQiitaBorder}`,
+  `--source-qiita-text:${theme.sourceQiitaText}`,
+  `--source-zenn-bg:${theme.sourceZennBg}`,
+  `--source-zenn-border:${theme.sourceZennBorder}`,
+  `--source-zenn-text:${theme.sourceZennText}`,
+  `--source-note-bg:${theme.sourceNoteBg}`,
+  `--source-note-border:${theme.sourceNoteBorder}`,
+  `--source-note-text:${theme.sourceNoteText}`,
+  `--source-devto-bg:${theme.sourceDevtoBg}`,
+  `--source-devto-border:${theme.sourceDevtoBorder}`,
+  `--source-devto-text:${theme.sourceDevtoText}`,
+  `--translation-bg:${theme.translationBg}`,
+  `--translation-border:${theme.translationBorder}`,
+  `--translation-text:${theme.translationText}`,
+  `--tag-bg:${theme.tagBg}`,
+  `--tag-border:${theme.tagBorder}`,
+  `--tag-text:${theme.tagText}`,
+  `--arrow-color:${theme.arrowColor}`,
+  `--arrow-hover-color:${theme.arrowHoverColor}`,
+  `--profile-border:${theme.profileBorder}`,
+  `--icon-border:${theme.iconBorder}`,
+  `--qiita-mark:${theme.qiitaMark}`
+].join(';');
+---
+
+<!doctype html>
+<html lang={lang} style={themeStyle}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Hiragino Sans", "Noto Sans JP", "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+      }
+      header, main, footer {
+        width: min(100%, var(--max));
+        margin: 0 auto;
+        padding: 1rem;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        gap: 1rem;
+      }
+      .header-left { display: flex; align-items: center; gap: 1rem; }
+      nav a { margin-right: 0.75rem; }
+      nav a:last-child { margin-right: 0; }
+      .lang-switch { font-size: 0.9rem; white-space: nowrap; color: var(--muted); }
+      .lang-switch a { color: inherit; text-decoration: underline; }
+      a { color: inherit; }
+      h1, h2, h3 { line-height: 1.25; }
+      .muted { color: var(--muted); }
+      article h1,
+      article h2 {
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 0.32rem;
+      }
+      footer {
+        border-top: 1px solid var(--line);
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      article img { max-width: 100%; height: auto; }
+      ul { padding-left: 1.2rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-left">
+        <strong><a href={`/${lang}/`}>{siteConfig.brandName}</a></strong>
+        <nav>
+          <a href={`/${lang}/`}>About</a>
+          <a href={`/${lang}/blog/`}>Blog</a>
+        </nav>
+      </div>
+      {languageSwitchHref && (
+        <div class="lang-switch">
+          {lang === 'ja' ? (
+            <>
+              <a href={languageSwitchHref}>EN</a> / JA
+            </>
+          ) : (
+            <>
+              EN / <a href={languageSwitchHref}>JA</a>
+            </>
+          )}
+        </div>
+      )}
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>{siteConfig.footerStackText}</footer>
+  </body>
+</html>
