@@ -22,6 +22,33 @@ npm install
 npm run dev
 ```
 
+## `fukushiki.dev` 公開向け設定
+
+このリポジトリは `astro.config.mjs` で本番URLを `https://fukushiki.dev` に固定しています。
+
+- `site`: `https://fukushiki.dev`
+- `output`: `static`
+- ビルド成果物: `dist/`
+
+追加済みのSEO系エンドポイント:
+
+- `/sitemap.xml`
+- `/rss.xml`
+- `/robots.txt`
+
+## Cloudflare Pages デプロイ
+
+1. Cloudflare Pages でこのリポジトリを接続
+2. Build command を `npm run build` に設定
+3. Build output directory を `dist` に設定
+4. デプロイ後、Pages の `Custom domains` で `fukushiki.dev` を追加
+5. 必要なら `www.fukushiki.dev` も追加し、`fukushiki.dev` へリダイレクト設定
+
+DNS の基本方針:
+
+- Apex (`fukushiki.dev`): Cloudflare Pages の案内に従って接続
+- `www`: `fukushiki.dev` へ寄せる（将来の運用を単純化）
+
 ## サイト設定ファイル
 
 `src/config/site.ts` で以下をまとめて変更できます。

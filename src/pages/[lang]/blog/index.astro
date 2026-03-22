@@ -68,7 +68,12 @@ const items = [
 ].sort((a, b) => b.date.getTime() - a.date.getTime());
 ---
 
-<BaseLayout title={isJa ? 'ブログ一覧' : 'Blog'} lang={lang} languageSwitchHref={`/${otherLang}/blog/`}>
+<BaseLayout
+  title={isJa ? 'ブログ一覧' : 'Blog'}
+  description={isJa ? '日本語記事と外部投稿の一覧です。' : 'A list of blog posts and external writings.'}
+  lang={lang}
+  languageSwitchHref={`/${otherLang}/blog/`}
+>
   <h1>{isJa ? 'ブログ一覧' : 'Blog'}</h1>
   <ul class="post-list">
     {items.map((item) => (

@@ -29,7 +29,12 @@ const socialLinks = socialOrder
   }));
 ---
 
-<BaseLayout title={isJa ? 'プロフィール' : 'Profile'} lang={lang} languageSwitchHref={`/${otherLang}/`}>
+<BaseLayout
+  title={isJa ? 'プロフィール' : 'Profile'}
+  description={profile.bio.join(' ')}
+  lang={lang}
+  languageSwitchHref={`/${otherLang}/`}
+>
   <article class="profile">
     <img class="profile-image" src={siteConfig.profileImageSrc} alt={isJa ? 'プロフィール画像' : 'Profile image'} />
 
